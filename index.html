@@ -3,6 +3,7 @@
 <style>
 body {
 margin-left: 5%;
+background-color: #EEE;
 }
 .face {
 margin-bottom: 0;
@@ -27,9 +28,25 @@ margin-left: 1.5%;
 width: 600px;
 
 }
+
+rect {
+ opacity: .5;
+}
+
+#sidewall {
+position: absolute;
+right: 2px;
+top: 2px;
+}
 </style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
+
+<svg id=sidewall > </svg>
+
+<script src=./sidewall.js> </script>
+
 <p class=face>NSkelsey</p>
 <p class=tagline>-- A page on the web devoted to me</p>
 <p class=top><a href=#thunk >Resume</a> -- <a href=http://www.github.com/nskelsey>Github</a> -- <a
