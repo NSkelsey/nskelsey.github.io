@@ -1,4 +1,4 @@
-
+window.onload = function() {
 var height = document.body.scrollHeight,
     width = 1/3*window.innerWidth,
     n = Math.floor(height/140),  // number of nodes
@@ -113,3 +113,4 @@ function sine(n, o, j) {
     }
     return array.map(function(d, i) { return {x: i, y: d}; });
 }
+};
