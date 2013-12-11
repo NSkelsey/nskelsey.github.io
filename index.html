@@ -1,64 +1,214 @@
 <html>
-<head>
-<style>
-body {
-margin-left: 5%;
-background-color: #EEE;
-}
-.face {
-margin-bottom: 0;
-font-size: 5em;
-}
-.tagline {
-font-size: 1.5em;
-margin-left: 2%;
-margin-top: 0;
-}
-.top {
-font-size: 1.25em;
-}
-.bhead {
-font-size: 1.5em;
-border-bottom: 2px solid;
-display: inline-block;
-}
-.words {
-font-size: 1.15em;
-margin-left: 1.5%;
-width: 600px;
+  <head>
+    <style>
+      body {
+        margin-left: 5%;
+      }
+      .face {
+        margin-bottom: 0;
+        font-size: 5em;
+      }
+      .tagline {
+        font-size: 1.5em;
+        margin-left: 2%;
+        margin-top: 0;
+      }
+      .top {
+        font-size: 1.25em;
+      }
+      .bhead {
+        font-size: 1.5em;
+        border-bottom: 2px solid;
+        display: inline-block;
+      }
+      p {
+        font-size: 1.15em;
+        margin-left: 1.5%;
+        width: 40%;
+      }
 
-}
+      #sidewall {
+        z-index: 9000;
+      }
+      .aside {
+        margin-left: 30px;
+        padding: 10px;
+        width: 35%;
+        font-family: monaco;
+        color: white;
+        background: black;
+        opacity: 0.5;
+        border-radius: 8px;
+      }
 
-rect {
- opacity: .5;
-}
+      rect {
+        opacity: .5;
+        stroke: white;
+        stroke-width: 4;
+      }
 
-#sidewall {
-position: absolute;
-right: 2px;
-top: 2px;
-}
-</style>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-</head>
-<body>
+      #sidewall {
+        position: absolute;
+        left: 2px;
+        top: 6px;
+      }
+    </style>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
 
-<svg id=sidewall > </svg>
 
-<script src=./sidewall.js> </script>
+    <script src=./sidewall.js> </script>
+    <svg id=sidewall > </svg>
+    <p class=face>Nick Skelsey</p>
+    <p class=tagline>-- A page on the web devoted to me</p>
+    <p class=top><a href="./resume.pdf" >Resume</a> -- <a href=http://www.github.com/nskelsey>Github</a> -- <a
+      href=#thunk>Thoughts</a></p>
+    <div id=thoughts>
+      <a name=thunk></a>
+      <h3 class=bhead>Understanding Bits of Debian</h3>
+      <div class = story!>
+        <p>
+        As a final project for my operating systems course I tried to get a Debian package updated in the official package archive. The package was a bundling of the apache projects full-text search engine solr. I ended up failing miserably at this stated goal, but I learned a couple things in process and want to make it easier for someone to understand what I now know to be a simple, but time-consuming process. 
+        </p>
+        <p>
+        Before I go any further let me give a disclaimer about the knowledge distributed below. I do not claim to know
+        all of the details of package management nor am I 100% positive that my interpretation of what I have read and
+        done is correct. However, I approached the problem as any new wannabe Debian developer did and started by
+        reading the many things I was told to. After packaging and altering some minor self made packages it appeared to
+        me that I had the chops to take on updating the solr distribution.I found out that I did not.
+        </p>
+        <p>
+        As it turns out, how I couldn't get the package updated is not an interesting story. So instead I will talk
+        about what I learned about package management and some perspective gained from the experience. Before I explain
+        how Debian works, I would like to explain how software is generally distributed. This is mainly to see if I can
+        get my roommate to read past the fifth paragraph. So skip this next section if you happen to be a computer
+        science proffesor.
+        </p>
+        <h3>A Gentle Introduction to Distributing Software</h3>
+        <p>
+        Consider the web-browser you are using to visit this website right now. You are probably using a browser that
+        has been constantly updated or needed updating since you first started using it. This means that people are
+        actively improving the code that is used to 'build' your web-browser. Many other programs on your computer also
+        require updates including your operating system itself. When the developers of some application make changes to code which
+        requires an update, we say they are releasing those changes.
+        </p>
+        <p>
+        Software can be released in a huge number of ways, but generally there are two approaches. Either the software
+        running on a user's computer can detect when homebase (the upstream source) has an update for it or periodically
+        the user can check or be asked to check whether software running on their system needs updating. In addition to
+        this, the update to the codebase is sometimes big enough to warrant a whole new version of the software, which requires a fresh installation of the new release.
+        </p>
+        <p>
+        Now most essential software running on your machine, if it is a Mac or PC will either update itself or ask for
+        your permission to update, but things are different for operating systems that are free. Most popular Linux
+        based operating systems including Debian have things called package management systems associated with them.
+        From the users point of view these systems are the source of all system updates and the central repositories of
+        almost every useful tool and piece of  software out there. The big picture about package management is that it
+        is the way software is distributed, released and installed for most free operating systems. Meaning the
+        packagement system is crucial to the security, stability and sucess of the operating system.
+        </p>
+        <h3> Package Management in Debian</h3>
+        <p>
+        Now onto some gross specifics, package management in Debian comes down to one simple task --editing the contents
+        of and then building a .deb file. A .deb file is a compressed archive file that contains everything the
+        operating system needs to install that file. Put simply, installing a .deb file is how a user gets new software onto their system. These archive files contain a number of things shown in the picture below.
+        </p>
+        <img src=./deb-file.gif alt="building .deb files"> </img>
+        <p>
+        We can see that the .deb file contains two main things. The source code of the software, various licenses, a
+        makefile and a set of Debian specific configuration files. Tools included with Debian when you first install it understand this
+        configuration and will do the "right thing" during installation.
+        </p>
+        <div class=aside>
+          If you want to examine the contents of some package you found on the internet use:<br>
+        <code >
+          dpkg -x packagename.deb ./
+        </code>
+      </div>
 
-<p class=face>NSkelsey</p>
-<p class=tagline>-- A page on the web devoted to me</p>
-<p class=top><a href=#thunk >Resume</a> -- <a href=http://www.github.com/nskelsey>Github</a> -- <a
-href=/thunk>Thoughts</a></p>
-<div id=thunk>
-<p class=bhead>Sample Post</p>
-<p class=words> 
-This is what an hour of messing around with html will get you. Nothing
-interesting or special. I want to add a picture and or a javascript wheel of
-spinning coolness.
-</p>
-</div>
+        <p>
+        The configuration specified in the debian directory can do any number of things. These files follow a documented
+        set of conventions, which you need to follow if the package is going into the archive. Here's an <a
+          href=http://www.Debian.org/doc/manuals/developers-reference/best-pkging-practices.html#bpp-Debian-changelog >
+          example</a>.... Despite there being a "right way" to do things the configuration files for packages
+        essentially have free reign on a system once they are invoked. Since installation almost always requires
+        super-user privileges these packages can do anything. See <a href=http://gnome-look.org/groups/?id=458>here</a> for an example of when someone abuses this.
+        </p>
+        <p>
+        For projects larger than our catsay example, the .deb file contains only the software's binary and system
+        configuration. We must have some method to generate this file from the source code of the application we want to  package. If
+        the build process of that application is poorly implemented this becomes hard.</p>
+        <p> Conceptually the generation of the .deb file is pretty simple. All that is required is the original source
+        code of the software and the build tools that compile that code into an executable binary. Note that for our
+        smaller cowsay project we could just compile everything at install time. With larger projects this would take
+        hours.</p>
+        <p> The source code files plus that same debian directory are combined in another archive file with the extension .dsc. The debian source file, is
+        then used to build the .deb file using more configuration specified in, you guessed it, the debian directory!
+        This actually took me an embarrassingly long time to understand, and I think a picture does a good job of
+        describing it. So here: </p>
+        <img src=./building-from-source.gif alt="debian build process"> </img> 
+        <p>
+        So, say we found some software we want to package, perhaps a full text search 
+        <a  href=http://lucene.apache.org/solr/ >engine</a>.
+         We have a .dsc file that builds our .deb file and when we install the
+        .deb file everything works and the program is installed on our system. We are done right? Wrong. Our package
+        still needs to get into the centralized repository before anyone other than your closest bestest friends use it.
+        These package archives are carefully maintained by members of the Debian project. Since any
+        package listed could potentially compromise your system, there is a highish quality standard for software that
+        is listed.  Packages in the archive are logically separated by purpose, which is documented
+        <a href=http://www.Debian.org/doc/Debian-policy/ch-archive.html>here</a>.
+        </p>
+        <img src=package-archive.gif alt="debian package archives"> </img>
 
-</body>
+        <p>
+        Since our new package is high quality and interesting, we must identity where this package should live in the archive
+        and find somebody to put it there. To do this you need someone who is officially a member of the Debian project to
+        "sponsor" your upload. This means that there is a process for finding a sponsor as well. Again this is not particularly interesting so here it is described in pictures.
+        </p>
+
+        <img src=./update-process.jpg alt="update process"> </img>
+
+        <p>
+        Once our deb file is uploaded to the archive it will be available for download by anyone! Huzzah! If people use
+        the software some of them might find bugs, which we are now responsible for patching. At this point, we are
+        committed to distributing our software through Debian's system. But, we are one step closer to gaining upload privleges.
+        </p>
+        <p>
+        The takeaway from getting your package sponsored is that, the burden of getting everything working is on you. A
+        member only has to replicate your claims of functionality, which is quite easy to do and then upload your
+        changes following a set <a
+          href=http://www.Debian.org/doc/manuals/developers-reference/beyond-pkging.html#sponsoring>policy</a>. This is actually is a great way to run a distributed project and means that for those on the outside must really be motivated to contribute. 
+        </p>
+        <h3>
+          Package Maintence is the lion's share of work for the Debian project.
+        </h3>
+        <p>
+        To become a member of the Debian project, or a "Debian Developer" is to gain two crucial privileges, upload
+        rights into every package archive and a vote in procedural matters. There are by my estimates around 670
+        active Debian Developers (<a
+          href=http://people.Debian.org/~spaillard/developers-age-histogramm/devs-age-histo.2013-12-01.png >source</a>) and each one of them has a PGP key that lets them update any package in the archive 
+        </p>
+        <p>
+        Since every package in the archive is also an open-source project, the maintainers of Debian are only required
+        to update those packages to see real improvements in their operating system. There over 40,000 packages
+        maintained in the archive, meaning requests to update packages come all the time.
+        This works great for updating software that the packaga management system can distribute. But,to update package
+        management system itself is to change how <em>every</em> piece of software interacts with Debian.
+        </p>
+        <p>
+        Since Debian one of the oldest distrobutions, change is incremental. This explains the huge number of small tools that a
+        contributor must know how to use before they can contribute. The learning curve alone partly explains why new distributions of
+        linux keep popping up. Many of them, like Arch-Linux have essentially iterated on the Debian's package management
+        system by making it easier for new users to contribute into the system.</p> 
+        <p>This makes sense, no sane person would spend time
+        trying to get the Debian community to change their system. It would be easier to just go make a better one. The only way to meaningfully
+        improve such a core and fundamental system is to create a new version of it.
+        </p>
+        <p>
+        Which is what happens all the <a href=http://futurist.se/gldt/wp-content/uploads/12.10/gldt1210.svg >time.</a>
+        </p>
+      </div>
+    </div>
+  </body>
 </html>
