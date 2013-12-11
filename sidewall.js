@@ -1,13 +1,14 @@
 
-var height = 2*document.body.offsetHeight,
-    width = window.innerWidth,
-    n = 10,  // number of nodes
-    dur = 20000, // duration of transition
+var height = document.body.scrollHeight,
+    width = 1/3*window.innerWidth,
+    n = Math.floor(height/140),  // number of nodes
+    dur = 30000, // duration of transition
     hop = 10,
     barHeight = height/n,
     d3stack = d3.layout.stack(),
+    min = 0,
     arrays = d3.range(3).map(function(d, i) { return sine(n, .1, i) }),
-    stack = d3stack(arrays)
+    stack = d3stack(arrays);
 
 var svg = d3.select("#sidewall")
     .attr("width", width)
@@ -17,7 +18,7 @@ var svg = d3.select("#sidewall")
 var x = d3.scale.linear()
     .clamp(true)
     .domain([0, findStackMax(stack)])
-    .range([0, 2*width/3]);
+    .range([min, width]);
 
 var layer = svg.selectAll(".layer")
     .data(stack);
@@ -35,10 +36,10 @@ var rect = layer.selectAll("rect")
 
 // fuction that positions elements on the right side of our svg
 function rect_posish(select) {
-   select.attr('width', function(d) { return x(d.y) })
-    .attr('x', function(d) {return width - x(d.y0 + d.y) + 4})
-    .attr('y', function (d, i){ return barHeight*i + 2 })
-    .attr('height', barHeight - 4);
+   select.attr('width', function(d) { return x(d.y) - 6 })
+    .attr('x', function(d) {return width - x(d.y0 + d.y)})
+    .attr('y', function (d, i){ return barHeight*i})
+    .attr('height', barHeight - 5);
 }
 delay_func(gray_update)
 
@@ -46,12 +47,12 @@ function gray_update() {
     var a = sine(n, .1);
     arrays = d3.range(3).map(function () { return sine(n, .1, 1) });
     var stack = d3.layout.stack()(arrays);
-    width = window.innerWidth;
+    width = 1/3*window.innerWidth;
     svg.attr('width', width);
     x = d3.scale.linear()
       .clamp(true)
       .domain([0, findStackMax(stack)])
-      .range([0, width/3]);
+      .range([min, width]);
 
     // Update!
     var layerUp = svg.selectAll(".layer") 

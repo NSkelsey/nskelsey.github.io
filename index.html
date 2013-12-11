@@ -24,12 +24,9 @@
       p {
         font-size: 1.15em;
         margin-left: 1.5%;
-        width: 40%;
+        width: 50%;
       }
 
-      #sidewall {
-        z-index: 9000;
-      }
       .aside {
         margin-left: 30px;
         padding: 10px;
@@ -43,25 +40,28 @@
 
       rect {
         opacity: .5;
-        stroke: white;
+        stroke-opacity: .5;
         stroke-width: 4;
       }
 
+    #thoughts img {
+        margin-left: -20px;
+    }
+
       #sidewall {
         position: absolute;
-        left: 2px;
+        right: 2px;
         top: 6px;
+        z-index: 9000;
       }
     </style>
     <script src="http://d3js.org/d3.v3.min.js"></script>
   </head>
   <body>
-
-
-    <script src=./sidewall.js> </script>
     <svg id=sidewall > </svg>
     <p class=face>Nick Skelsey</p>
     <p class=tagline>-- A page on the web devoted to me</p>
+    <p class=>click here to stop the bars</p>
     <p class=top><a href="./resume.pdf" >Resume</a> -- <a href=http://www.github.com/nskelsey>Github</a> -- <a
       href=#thunk>Thoughts</a></p>
     <div id=thoughts>
@@ -210,5 +210,6 @@
         </p>
       </div>
     </div>
+    <script src=./sidewall.js> </script>
   </body>
 </html>
