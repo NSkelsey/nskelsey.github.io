@@ -41,7 +41,7 @@ function rect_posish(select) {
     .attr('y', function (d, i){ return barHeight*i})
     .attr('height', barHeight - 5);
 }
-delay_func(gray_update)
+//delay_func(gray_update)
 
 function gray_update() {
     var a = sine(n, .1);
@@ -93,7 +93,7 @@ function rect_timing(select) {
 
 function delay_func(callback) {
     gray_update();
-    setTimeout(function() { delay_func(gray_update) }, dur+250);
+   // setTimeout(function() { delay_func(gray_update) }, dur+250);
 }
 
 function sine(n, o, j) {
