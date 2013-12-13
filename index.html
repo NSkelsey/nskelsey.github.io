@@ -28,29 +28,39 @@
       }
 
       .aside {
-        margin-left: 30px;
+        margin-left: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
         padding: 10px;
-        width: 35%;
         font-family: monaco;
         color: white;
-        background: black;
-        opacity: 0.5;
+        background: #333;
         border-radius: 8px;
+        display: inline-block;
       }
 
-      rect {
+    .aside div {
+        word-wrap: break;
+    }
+
+    code {
+         padding-top: 20px;
+         color: rgb(165, 194, 97);
+         white-space: nowrap;
+    }
+
+
+    #thoughts img {
+        margin-top: 20px;
+        margin-left: -20px;
+    }
+    
+    rect {
         opacity: .5;
         stroke-opacity: .5;
         stroke-width: 4;
       }
 
-    #thoughts img {
-        margin-left: -20px;
-    }
-
-    code {
-         color: rgb(165, 194, 97);
-    }
 
       #sidewall {
         position: absolute;
@@ -85,7 +95,7 @@
         I am only going to talk a-little about that experience at the very end of this post. Instead I want to focus on
          what I learned about package management and some perspective gained from the experience. Before I explain
         how Debian works, I would like to explain how software is generally distributed. This is mainly to see if I can
-        get my roommate to this post. So skip this next section if you happen to be a computer
+        get my roommate to read this post. So skip this next section if you happen to be a computer
         science professor.
         </p>
         <h3>A Gentle Introduction to Distributing Software</h3>
@@ -102,19 +112,20 @@
         the user can check or be asked to check whether software running on their system needs updating. Less frequently, the update to the codebase can be  big enough to warrant a whole new version of the software. This requires a fresh installation of the new release, as if the system is installing brand new software.
         </p>
         <p>
-        Now most essential software running on your machine, if it is a Mac or PC will either update itself or ask for
+        Most essential software running on your machine, if it is a Mac or PC will either update itself or ask for
         your permission to update, but things are different for operating systems that are free. Most popular Linux
         based operating systems including Debian have things called package management systems associated with them.
         From the users point of view these systems are the source of all system updates and the central repositories of
         almost every useful tool and piece of software out there. The big picture about package management is that it
         is the way software is distributed, released and installed on most free operating systems. Meaning the
-        package management system is crucial to the security, stability and success of the operating system.
+        package management system is crucial to the security, stability, and success of the operating system.
         </p>
         <h3> Package Management in Debian</h3>
         <p>
         Now onto some gross specifics, package management in Debian comes down to one simple task -- editing the contents
         of and then building a deb file. A deb file is a compressed archive file that contains everything the
-        operating system needs to install the software it contains. Put simply, installing a .deb file is how a user gets new software onto their system. These archive files contain a number of things shown in the picture below.
+        operating system needs to install the software it contains. Put simply,
+installing a .deb file is how a user gets new software onto their system. These archive files contain a number of things shown in the picture below.
         </p>
         <img src=./deb-file.gif alt="building .deb files"> </img>
         <p>
@@ -122,15 +133,18 @@
         configuration and will do the "right thing" during installation. By that I mean the tool dpkg will unpack the deb file and run `debian/rules install`.
         </p>
         <div class=aside>
-          If you want to examine the contents of some package you found on the internet use:<br>
+          <div>
+          If you want to examine the contents of some package you found on the
+internet use:</div><br>
         <code >
-          dpkg -x packagename.deb ./
+          $ dpkg -x packagename.deb ./
         </code>
       </div>
 
         <p>
         The configuration specified in the debian directory can do any number of things. These files follow a documented
-        set of conventions, which you need to abide by if the package is going into the archive. Here's an <a
+        set of conventions, which you need to abide by if the package is going
+into the official archive. Here's an <a
           href=http://www.Debian.org/doc/manuals/developers-reference/best-pkging-practices.html#bpp-Debian-changelog >
           example</a>.... Despite there being a "right way" to do things the configuration files for packages
         essentially have free reign on a system once they are invoked. Since installation almost always requires
@@ -142,32 +156,39 @@
         the build process of that application is poorly implemented this becomes hard.</p>
         <p> Conceptually the generation of the .deb file is pretty simple. All that is required is the original source
         code of the software and the build tools that compile that code into an executable binary. Note that for our
-        smaller cowsay project we could just compile everything at install time. But with larger projects this would take
-        hours.</p>
-        <p> The source code files plus that same debian directory are combined in another archive file with the extension .dsc. The debian source file is
-        then used to build the .deb file using more configuration specified in, you guessed it, the debian directory! This actually took me an embarrassingly long time to understand, and I think a picture does a good job of
-        describing it. So here: </p>
+        smaller cowsay project we could just compile everything at install time by running make. 
+        But with larger projects this would take hours.
+        </p>
+        <p> The source code files plus that same debian directory are combined
+in another archive file with the extension .tar.gz. Unpacked this archive file is
+        then used to build the .deb file using more configuration specified in,
+you guessed it, the debian directory! This actually took me an embarrassingly
+long time to understand. I think a picture does a good job of
+        describing it. And I got it wrong the first time I wrote this paragraph. So here: </p>
         <img src=./building-from-source.gif alt="debian build process"> </img> 
         <p>
         Say we found some software we want to package, perhaps a full text search 
         <a  href=http://lucene.apache.org/solr/ >engine</a>.
-         We have a .dsc file that builds our .deb file and when we install the
-        .deb file everything works and the program is installed on our system. We are done right...? Wrong. Our package
+         We have an .tar.gz archive unpacked that builds our .deb file. When we
+install this deb file everything works and the application is installed on our system. We are done right...? Wrong. Our package
         still needs to get into the package archive before anyone other than your closest bestest friends use it. </p>
 
        <div class=aside>
-          You can download the source of some .deb file using apt-get and then build it using these commands:<br>
+          <div>You can download the source of some .deb file using apt-get and then
+            build it using these commands: <br>(If you have update your
+            /etc/apt/sources.list and have debuild installed)</div><br>
           <code>
-            apt-get build-dep package-name # installs build dependencies<br>
-            apt-get source package-name # downloads the .dsc file along with the upstream source<br>
-            debuild -us -uc # a command from devscripts that builds the package without signing it<br>
+            $ apt-get build-dep package-name <br>
+            $ apt-get source package-name <br>
+            $ cd package-name-${version-number}<br>
+            $ debuild -us -uc <br>
           </code>
         </div>
 
-<p>
+        <p>
         The package archive is carefully maintained by members of the Debian project. Since any
         package listed could potentially compromise your system, there is a high quality standard for software that
-        is listed.  Packages in the archive are logically separated by purpose, which is documented
+        is listed. Packages in the archive are logically separated by purpose, which is documented
         <a href=http://www.Debian.org/doc/Debian-policy/ch-archive.html>here</a>.
         </p>
 
@@ -192,6 +213,62 @@
         changes following a set <a href=http://www.Debian.org/doc/manuals/developers-reference/beyond-pkging.html#sponsoring>policy</a>.
         This is actually a great way to run a distributed project and means that outsiders must really be motivated to contribute. 
         </p>
+        <h3>
+          There is no right way
+        <a href=right></a>
+        </h3>
+    <p>I am going to take a quick detour into my specific experience with
+packaging solr. Before I started this project I had already contributed to a
+puppet script that installs solr in a very hacky <a
+href=https://github.com/o19s/puppet-solr/blob/master/manifests/core.pp#L22
+>manner</a>.  So I figured the
+package in the repository would do something smart and install this beast of a
+java application the right way. While the approach taken by the package is
+different than our puppet script it is just as hacked together.</p>
+
+    <p>Solr uses a java build tool called ant to compile its source into java byte
+code. Ant uses xml configuration files to figure out how its going to build the
+application. These live all over the application and can import parameters from
+other xml files. For some reason, before the build process could start for the
+3.6.0 release some of those libraries needed to be manually linked in. In spite
+of the all the other configuration.</p>
+
+<div class=aside >
+<div>
+These lines in debian/rules scared and confused me. There are 46 paths to jars in
+debian/buildjars...
+</div><br>
+<code>
+override_dh_auto_configure:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# Link in jars from /usr/share/java rather<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# than patching the build process<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for pkg in `cat debian/build-jars`; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;do \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ln -sf `echo $$pkg | cut -d : -f 1` `echo $$pkg | cut -d : -f 2`; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;done<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dh_auto_configure
+</code>
+    </div>
+
+    <p>Not being one to blink in the face of adversity, I decided I had better see
+if I could just build the new release of solr on my own without the help of the
+whole debian package. I realized at this point two things that had been nagging
+at my naïve undergrad brain when I started this project. I was trying to update
+the package from the 3.6.0 release to 4.6.0. Many backwards incompatible changes
+had been made and the solr docs themselves were <a href=http://wiki.apache.org/solr/SolrInstall >telling me</a>
+to build the
+application using the xml file in the example directory. </p>
+
+    <p>When I mentioned the hack that we used to get solr working in that puppet
+module, what we did was use the jar in their example directory as the solr
+'application' that we 'installed.' This is when I lost interest in the current
+endeavor. Not only would I have to rewrite the debian package in an arcane
+format just to do something hacky, the current maintainer started
+trying to update the package <a href=http://lists.debian.org/debian-java/2011/08/msg00098.html >
+in 2011</a> with no apparent success.</p>
+    <p>With no response from the email I sent him and solr 5 somewhere around the
+corner, I just quit. Nothing interesting to that. I am going to install Arch on
+my next laptop.</p>
         <h3>
           Package Maintenance is the lion's share of work for the Debian project.
         </h3>
