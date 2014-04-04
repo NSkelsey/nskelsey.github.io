@@ -1,0 +1,70 @@
+==================================================================
+https://keybase.io/nskelsey
+--------------------------------------------------------------------
+
+I hereby claim:
+
+* I am an admin of http://nskelsey.com
+* I am nskelsey (https://keybase.io/nskelsey) on keybase.
+* I have a public key with fingerprint 280C 2E73 B195 F663 04EB  0A2A A191 3E88 AF45 5DDC
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "280c2e73b195f66304eb0a2aa1913e88af455ddc",
+            "host": "keybase.io",
+            "key_id": "a1913e88af455ddc",
+            "uid": "36061a37cae264859519ef65b9c80c00",
+            "username": "nskelsey"
+        },
+        "service": {
+            "hostname": "nskelsey.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1396569235,
+    "expire_in": 157680000,
+    "prev": "56e41eadda99e205807a626df5059a3cb0d9002c2c29a35ad3ac22521f5795e4",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+owGbwMvMwMS4cKJdx3rX2DuMpw98SmIItv2ytFopKT+lUsmqWik7FUylZealpxYV
+FGXmlShZKRlZGCQbpZobJxlamqaZmRkbmKQmGSQaJSYaWhoap1pYJKaZmJqmpCQr
+6Shl5BeDdACNSUosTtXLzAeKATnxmSlAUSzqS8ESxmYGZoaJxubJialGZiYWppam
+hpapaWamSZbJQKsNDEAKi1OL8hJzU4Gq84qzU3OKgQ6t1VECipZlJqeC3AyyGk2F
+XnJ+LlBvQVF+SX5yfg5QJqOkpMAKpLGksgCksjw1KR5qRnxSZl4K0N9ADWWpRcWZ
++XlKVoZAlcklmSBDDY0tzUzNLI2MTXWUUisKMotS4zNBKkzNzSwMgABkTWoZ0EhT
+s1QTw9TElJRES8tUIwNTCwPzRDMjs5Q0UwNTy0Tj5CSDFEsDA6NkIARyTRNTjBOT
+jYxMjQzTTM0tTVNNlEC+KszLV7IyBjozMR1oZHFmel5iSWlRqlItVyeTDAsDIxMD
+GysTKOoYuDgFYBH6zYz/D/9a4Tm1dbH8kbEPRC6Y+TjPkNVi88q7elPDcfv35w0M
+lzwucshu0jV8/Cc721+krUXkDd+NjRmpdhIfJ4QpRUh9qrojdjGxN7Klbr3VphfF
+a0Lkg470JVlcUDzTH3DfQvGDjsDTzU8Mzrc/MZpX+Pj1hgcWVdNOKS+YucXBtzrw
+Xe+mGzl9cgbMG+0Yds6KDrebYesn9ZpvxUa787p35Uwr3B6Wrfmk9WLu9Xnq/zSd
+r5c1f1O2PcD960LSTpllGoZtV75Hc+mEbzutZZPV5/9MZp73+ukfPmywlwpfzxhr
+1qqcE+28T7T9nNjq7X5OL2RrDMXC/3EsPHB3q0mawF3xQ2FtWlen17XqlPcqVUg8
+CQt+f6TXnTGx/OljuSNcxm3LjTZnXu88Xzzro9U+1y++781jPn1I3dt192OdfPnT
+dMWujY2iVktSmXfULWHLmGI6eSEbH9MK1YgUB1bP6dWi1xumfPBZ6MyRcUbyZkzq
+LqHqD3+4dLiMDf9F9TWdPxb1XTa15PrKOufNS/Z8O+5q9l1CcD338w7/FfEnjydt
+Ll+9L4FlyhubzrMTNrXzLDFRX1fZcUNC5Mhs672yU99sXZ6mtmz7Hc/13Mq5a6a5
+zzkfv5q1eEGQTbnw2j61wO1ikrPKG5sbTx2KvNHxaSpzuoirUW5+W3jWtVkt/8+9
+8T9Y7HY2nzvpW2+oNXtq42wmThvH3IbXJgA=
+=M5eZ
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/nskelsey
+
+==================================================================
+
