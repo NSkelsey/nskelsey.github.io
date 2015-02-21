@@ -1,6 +1,6 @@
 window.onload = function() {
 var height =  document.body.scrollHeight,
-    width = 1/2*window.innerWidth,
+    width = 5/12*window.innerWidth,
     n = Math.floor(height/140),  // number of nodes
     dur = 30000, // duration of transition
     hop = 10,
